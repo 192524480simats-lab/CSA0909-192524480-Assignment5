@@ -75,8 +75,9 @@ Linux/macOS: use `:` instead of `; ` in the classpath. The demonstration is inte
 
 ```bash
 cd Task08
-javac -cp ".;../mysql-connector-j.jar" PassLoader.java BatchExperiment.java
+javac -cp ".;../mysql-connector-j.jar" PassLoader.java BatchExperiment.java JdbcComparison.java
 java -cp ".;../mysql-connector-j.jar" BatchExperiment
+java -cp ".;../mysql-connector-j.jar" JdbcComparison
 ```
 
 Run each data size requested in the assignment (10, 1,000, 10,000 and 100,000 as applicable) and record observed elapsed time, inserted row count, auto-commit/transaction behaviour and rollback results. Do not use invented timings.
@@ -90,7 +91,7 @@ Run each data size requested in the assignment (10, 1,000, 10,000 and 100,000 as
 
 ```bash
 cd Task09
-javac -cp ".;../mysql-connector-j.jar" MigratePasses.java
+javac -cp ".;../mysql-connector-j.jar" ../Task08/PassLoader.java MigratePasses.java
 java -cp ".;../mysql-connector-j.jar" MigratePasses passes-sample.csv
 ```
 
