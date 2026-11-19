@@ -9,7 +9,7 @@ public class PassStoreTest {
                 StandardOpenOption.APPEND);
         System.out.println("Existing: " + Arrays.toString(store.find("P03")));
         System.out.println("Missing: " + Arrays.toString(store.find("PX")));
-        System.out.println("Damaged P02: " + Arrays.toString(store.find("P02")));
+        System.out.println("Damaged P02: " + Arrays.toString(store.find("P02")));\n        System.out.println("Route 4 records: " + store.listByRoute(4).size());
         Files.deleteIfExists(f);
     }
 }
