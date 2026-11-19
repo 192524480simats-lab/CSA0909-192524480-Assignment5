@@ -5,6 +5,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PassStore {
     private final Path file;
@@ -43,6 +45,29 @@ public class PassStore {
             }
         }
         return null;
+    }
+
+    /** Returns all valid records for a route; malformed records are skipped. */
+    public List<String[]> listByRoute(int route) throws IOException {
+        List<String[]> matches = new ArrayList<>();
+        if (!Files.exists(file)) return matches;
+        try (BufferedReader reader = Files.newBufferedReader(file)) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] fields = line.split(",", -1);
+                if (fields.length != 5) continue;
+                try {
+                    int recordRoute = Integer.parseInt(fields[3]);
+                    double amount = Double.parseDouble(fields[4]);
+                    if (fields[0].isBlank() || fields[1].isBlank() || fields[2].isBlank()
+                            || recordRoute < 0 || !Double.isFinite(amount) || amount < 0) continue;
+                    if (recordRoute == route) matches.add(fields);
+                } catch (NumberFormatException ex) {
+                    // Ignore malformed record and continue scanning.
+                }
+            }
+        }
+        return matches;
     }
 
     public static void main(String[] args) throws IOException {
